@@ -52,6 +52,14 @@ async function run() {
       res.send(result);
     });
 
+    // subcategories
+    app.get("/allitems/:subcategory", async (req, res) => {
+      const subcategory = req.params.subcategory;
+      const query = { subcategory_Name: subcategory };
+      const result = await allItemsCollection.find(query).toArray();
+      res.send(result);
+    });
+
     // update single item
     app.put("/allitems/:id", async (req, res) => {
       const id = req.params.id;
