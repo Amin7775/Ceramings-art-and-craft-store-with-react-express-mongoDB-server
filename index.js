@@ -24,6 +24,32 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // operations
+    const subCategoriesCollection = await client.db('CeramingsDB').collection('subCategories')
+    const allItemsCollection = await client.db('CeramingsDB').collection('allItems')
+    
+
+    // crud subCategories - start
+    app.get('/subCategories', async(req,res)=>{
+      const result = await subCategoriesCollection.find().toArray()
+      res.send(result)
+    })
+    // crud subCategories - end
+
+    // all items - start
+    // get
+    app.get('/allitems', async(req,res)=>{
+      const result = await allItemsCollection.find().toArray()
+      res.send(result)
+    })
+
+    //post
+    app.post('/allitems', async(req,res)=>{
+      const query = req.body;
+      const result = await allItemsCollection.insertOne(query)
+      res.send(result)
+    })
+    // all items - end
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
