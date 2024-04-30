@@ -77,6 +77,21 @@ async function run() {
       res.send(result)
     });
 
+    // delete
+    app.delete("/allitems/:id", async(req,res)=>{
+      const id = req.params.id;
+      const query = { _id : new ObjectId(id)}
+      const result = await allItemsCollection.deleteOne(query)
+      res.send(result)
+    })
+
+    //post
+    app.post("/allitems", async (req, res) => {
+      const query = req.body;
+      const result = await allItemsCollection.insertOne(query);
+      res.send(result);
+    });
+
     //get items based on user
     // app.get('/allitems/:email' , async(req,res)=>{
     //   const email = req.params.email;
@@ -85,13 +100,6 @@ async function run() {
     // const result = await allItemsCollection.find(query).toArray()
     // res.send(result)
     // })
-
-    //post
-    app.post("/allitems", async (req, res) => {
-      const query = req.body;
-      const result = await allItemsCollection.insertOne(query);
-      res.send(result);
-    });
     // all items - end
 
     // Send a ping to confirm a successful connection
